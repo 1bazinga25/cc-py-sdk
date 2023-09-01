@@ -5,6 +5,7 @@ python_coincall.egg-info/
 **/__pycache__
 **/**/__pycache__
 test.py
+*Test.py
 
 ### STS ###
 .apt_generated
