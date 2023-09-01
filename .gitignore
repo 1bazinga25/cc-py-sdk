@@ -4,8 +4,8 @@ python_coincall.egg-info/
 *.DS_Store
 **/__pycache__
 **/**/__pycache__
-test.py
-*Test.py
+/test.py
+/*Test.py
 
 ### STS ###
 .apt_generated
