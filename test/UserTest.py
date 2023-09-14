@@ -8,10 +8,10 @@ class userTest(unittest.TestCase):
         self.userApi = User.UserAPI(api_key, api_secret_key, use_server_time=False)
 
 
-    def test_get_server_time(self):
+    def test_get_user_info(self):
         print(self.userApi.get_user_info())
 
-    def test_get_config(self):
+    def test_get_account_summary(self):
         print(self.userApi.get_account_summary())
 
 if __name__ == '__main__':

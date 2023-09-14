@@ -88,5 +88,65 @@ class FuturesAPI(Client):
         }
         url_path = "/open/futures/leverage/set/v1"
         return self._request("POST", url_path, params)
+    
+    def get_positions(self):
+        """
+        |
+        | **Get Positions**
+        | *Get futures positions.*
+
+        :API endpoint: ``GET /open/futures/position/get/v1``
+        :API doc: https://docs.coincall.com/#futures-endpoint-get-positions-signed
+        |
+        """
+
+        params = {}
+        url_path = "/open/futures/position/get/v1"
+        return self._request("GET", url_path, params)
+    
+    def place_order(self, symbol, qty, tradeSide, tradeType, clientOrderId=None, price=None):
+        """
+        |
+        | **Place Order**
+        | *Place a futures order.*
+
+        :API endpoint: ``POST /open/futures/order/create/v1``
+        :API doc: https://docs.coincall.com/#futures-endpoint-place-order-signed
+        :Parameter: request body
+        |
+        """
+
+        params = {
+            "symbol": symbol,
+            "qty": qty,
+            "tradeSide": tradeSide,
+            "tradeType": tradeType
+        }
+        if clientOrderId:
+            params['clientOrderId'] = clientOrderId
+        if price:
+            params['price'] = price
+        url_path = "/open/futures/order/create/v1"
+        return self._request("POST", url_path, params)
+    
+    def cancel_order(self, orderId=None, clientOrderId=None):
+        """
+        |
+        | **Cancel Order**
+        | *Cancel a futures order.*
+
+        :API endpoint: ``POST /open/futures/order/cancel/v1``
+        :API doc: https://docs.coincall.com/#futures-endpoint-cancel-order-signed
+        :Parameter: request body
+        |
+        """
+
+        params = {}
+        if orderId:
+            params['orderId'] = orderId
+        if clientOrderId:
+            params['clientOrderId'] = clientOrderId
+        url_path = "/open/futures/order/cancel/v1"
+        return self._request("POST", url_path, params)
 
         
