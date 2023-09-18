@@ -20,7 +20,7 @@ class FuturesAPI(Client):
         url_path = "/open/futures/market/symbol/v1"
         return self._request("GET", url_path, params)
     
-    def get_orderbook(self, symbol):
+    def get_depth(self, symbol):
         """
         |
         | **Get OrderBook**
@@ -148,5 +148,110 @@ class FuturesAPI(Client):
             params['clientOrderId'] = clientOrderId
         url_path = "/open/futures/order/cancel/v1"
         return self._request("POST", url_path, params)
+    
+    def cancel_orders(self, symbol, version='v1'):
+        """
+        |
+        | **Cancel Orders**
+        | *Cancel futures orders by symbol.*
+
+        :API endpoint: ``GET /open/futures/order/cancelOpenOrders/{version}/{symbol}``
+        :API doc: https://docs.coincall.com/#futures-endpoint-cancel-orders-signed
+        :Parameter: query string
+        |
+        """
+
+        params = {}
+        url_path = "/open/futures/order/cancelOpenOrders/{}/{}".format(version,symbol)
+        return self._request("GET", url_path, params)
+    
+    def get_open_orders(self, symbol=None, page=1, pageSize=20):
+        """
+        |
+        | **Get Open Orders**
+        | *Get futures open orders.*
+
+        :API endpoint: ``GET /open/futures/order/pending/v1``
+        :API doc: https://docs.coincall.com/#futures-endpoint-get-open-orders-signed
+        :Parameter: query string
+        |
+        """
+
+        params = {
+            "page": page,
+            "pageSize": pageSize
+        }
+        if symbol:
+            params["symbol"] = symbol
+        url_path = "/open/futures/order/pending/v1"
+        return self._request("GET", url_path, params)
+    
+    def get_order_by_id(self, orderId=None, clientOrderId=None):
+        """
+        |
+        | **Get Order Info**
+        | *Get an order information by orderId or clientOrderId.*
+
+        :API endpoint: ``GET /open/futures/order/singleQuery/v1``
+        :API doc: https://docs.coincall.com/#futures-endpoint-get-order-info-signed
+        :Parameter: query string
+        |
+        """
+
+        params = {}
+        if orderId:
+            params['orderId'] = orderId
+        if clientOrderId:
+            params['clientOrderId'] = clientOrderId
+        url_path = "/open/futures/order/singleQuery/v1"
+        return self._request("GET", url_path, params)
+    
+    def get_order_history(self, fromId=None, startTime=None, endTime=None, pageSize=20):
+        """
+        |
+        | **Get Order Details**
+        | *Get futures order history.*
+
+        :API endpoint: ``GET /open/futures/order/history/v1/{}``
+        :API doc: https://docs.coincall.com/#futures-endpoint-get-order-info-signed
+        :Parameter: query string
+        |
+        """
+
+        params = {
+            "pageSize": pageSize
+        }
+        if fromId:
+            params['fromId'] = fromId
+        if startTime:
+            params['startTime'] = startTime
+        if endTime:
+            params['endTime'] = endTime
+        url_path = "/open/futures/order/history/v1"
+        return self._request("GET", url_path, params)
+
+    def get_trade_history(self, fromId=None, startTime=None, endTime=None, pageSize=None):
+        """
+        |
+        | **Get Transaction details**
+        | *Get futrues transaction history.*
+
+        :API endpoint: ``GET /open/futures/trade/history/v1``
+        :API doc: https://docs.coincall.com/#futures-endpoint-get-transaction-details-signed
+        :Parameter: query string
+        |
+        """
+
+        params = {}
+        if fromId:
+            params['fromId'] = fromId
+        if startTime:
+            params['startTime'] = startTime
+        if endTime:
+            params['endTime'] = endTime
+        if pageSize:
+            params['pageSize'] = pageSize
+        url_path = "/open/futures/trade/history/v1"
+        return self._request("GET", url_path, params)
 
         
